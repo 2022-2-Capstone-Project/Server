@@ -29,6 +29,7 @@ class Profile(models.Model):
 
 class TourTheme(models.Model):
     title = models.CharField(max_length=100)  # 테마명
+    author = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)  # 작성자
     estimated = models.DurationField()  # 예상 소요 시간
     participants = models.PositiveIntegerField()  # 권장 참여자 수
     start_place = models.CharField(max_length=100)  # 시작 장소
