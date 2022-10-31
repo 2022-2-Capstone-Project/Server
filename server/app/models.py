@@ -13,14 +13,26 @@ class Profile(models.Model):
         JUNIOR = 'JR', _('Junior')
         SENIOR = 'SR', _('Senior')
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE())
-    nickname = models.CharField(max_length=30)
-    bookmarks = models.ManyToManyField()  # TODO
-    follows = models.ManyToManyField("self", symmetrical=False)
-    followers = models.ManyToManyField("self", symmetrical=False)
-    user_type = models.CharField() # TODO
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # 기본 유저 모델
+    nickname = models.CharField(max_length=30)  # 닉네임
+    bookmarks = models.ManyToManyField('TourTheme')  # 북마크한 테마 (선배용)
+    likes = models.ManyToManyField('Tour')  # 좋아요한 투어 (후배용)
+    follows = models.ManyToManyField('self', symmetrical=False)  # 내가 팔로우하는 유저
+    followers = models.ManyToManyField('self', symmetrical=False)  # 나를 팔로우하는 유저
+    user_type = models.CharField(
+        max_length=2,
+        choices=UserType.choices,
+        default=UserType.JUNIOR
+    )  # 유저 타입 (선배, 후배)
+    reputation = models.PositiveIntegerField()  # 평판 점수
 
 
-# TODO
 class TourTheme(models.Model):
-    pass
+    title = models.CharField(max_length=100)  # 테마명
+    estimated = models.DurationField()  # 예상 소요 시간
+    participants = models.PositiveIntegerField()  # 권장 참여자 수
+    start_place = models.CharField(max_length=100)  # 시작 장소
+    latitude = models.FloatField()  # 위도
+    longitude = models.FloatField()  # 경도
+    thumbnail = models.ImageField(upload_to='images/', blank=True, null=True)  # 썸네일
+
