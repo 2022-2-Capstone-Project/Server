@@ -15,22 +15,23 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)  # 기본 유저 모델
     nickname = models.CharField(max_length=30)  # 닉네임
-    bookmarks = models.ManyToManyField('TourTheme')  # 북마크한 테마 (선배용)
-    likes = models.ManyToManyField('Tour')  # 좋아요한 투어 (후배용)
-    follows = models.ManyToManyField('self', symmetrical=False, related_name='follower')  # 내가 팔로우하는 유저
-    followers = models.ManyToManyField('self', symmetrical=False, related_name='follow')  # 나를 팔로우하는 유저
+    bookmarks = models.ManyToManyField('TourTheme', blank=True)  # 북마크한 테마 (선배용)
+    likes = models.ManyToManyField('Tour', blank=True)  # 좋아요한 투어 (후배용)
+    follows = models.ManyToManyField('self', symmetrical=False, related_name='follower', blank=True)  # 내가 팔로우하는 유저
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='follow', blank=True)  # 나를 팔로우하는 유저
     user_type = models.CharField(
         max_length=2,
         choices=UserType.choices,
         default=UserType.JUNIOR
     )  # 유저 타입 (선배, 후배)
-    reputation = models.PositiveIntegerField()  # 평판 점수
+    reputation = models.PositiveIntegerField(default=0)  # 평판 점수
 
 
 class TourTheme(models.Model):
     title = models.CharField(max_length=100)  # 테마명
     author = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)  # 작성자
-    estimated = models.DurationField()  # 예상 소요 시간
+    created = models.DateTimeField(auto_created=True, blank=True)
+    estimated = models.IntegerField()  # 예상 소요 시간 (minutes)
     participants = models.PositiveIntegerField()  # 권장 참여자 수
     start_place = models.CharField(max_length=100)  # 시작 장소
     latitude = models.FloatField()  # 위도
