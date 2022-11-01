@@ -17,8 +17,8 @@ class Profile(models.Model):
     nickname = models.CharField(max_length=30)  # 닉네임
     bookmarks = models.ManyToManyField('TourTheme')  # 북마크한 테마 (선배용)
     likes = models.ManyToManyField('Tour')  # 좋아요한 투어 (후배용)
-    follows = models.ManyToManyField('self', symmetrical=False)  # 내가 팔로우하는 유저
-    followers = models.ManyToManyField('self', symmetrical=False)  # 나를 팔로우하는 유저
+    follows = models.ManyToManyField('self', symmetrical=False, related_name='follower')  # 내가 팔로우하는 유저
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='follow')  # 나를 팔로우하는 유저
     user_type = models.CharField(
         max_length=2,
         choices=UserType.choices,
@@ -37,3 +37,6 @@ class TourTheme(models.Model):
     longitude = models.FloatField()  # 경도
     thumbnail = models.ImageField(upload_to='images/', blank=True, null=True)  # 썸네일
 
+
+class Tour(models.Model):
+    pass
