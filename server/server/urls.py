@@ -20,13 +20,14 @@ from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import routers, permissions
-from app import views
+from user.views import *
+from tour_theme.views import *
 
 router = routers.DefaultRouter()
-router.register(r'tour-themes', views.TourThemeViewSet)
-router.register(r'profiles', views.ProfileViewSet)
-router.register(r'user', views.UserViewSet)
-router.register(r'permission', views.PermissionViewSet)
+router.register(r'tour-themes', TourThemeViewSet)
+router.register(r'profiles', ProfileViewSet)
+router.register(r'user', UserViewSet)
+router.register(r'permission', PermissionViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(

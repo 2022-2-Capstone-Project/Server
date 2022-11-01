@@ -6,29 +6,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0001_initial'),
+        ('tour_theme', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='profile',
             name='bookmarks',
-            field=models.ManyToManyField(null=True, to='app.tourtheme'),
+            field=models.ManyToManyField(null=True, to='tour_theme.tourtheme'),
         ),
         migrations.AlterField(
             model_name='profile',
             name='followers',
-            field=models.ManyToManyField(null=True, related_name='follow', to='app.profile'),
+            field=models.ManyToManyField(null=True, related_name='follow', to='tour_theme.profile'),
         ),
         migrations.AlterField(
             model_name='profile',
             name='follows',
-            field=models.ManyToManyField(null=True, related_name='follower', to='app.profile'),
+            field=models.ManyToManyField(null=True, related_name='follower', to='tour_theme.profile'),
         ),
         migrations.AlterField(
             model_name='profile',
             name='likes',
-            field=models.ManyToManyField(null=True, to='app.tour'),
+            field=models.ManyToManyField(null=True, to='tour_theme.tour'),
         ),
         migrations.AlterField(
             model_name='profile',

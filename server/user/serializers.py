@@ -1,13 +1,6 @@
 from django.contrib.auth.models import User, Permission
 from rest_framework import serializers
-
-from .models import TourTheme, Profile
-
-
-class TourThemeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = TourTheme
-        fields = '__all__'
+from .models import Profile
 
 
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):

@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0003_alter_profile_bookmarks_alter_profile_followers_and_more'),
+        ('tour_theme', '0003_alter_profile_bookmarks_alter_profile_followers_and_more'),
     ]
 
     operations = [

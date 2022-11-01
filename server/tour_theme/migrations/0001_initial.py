@@ -40,28 +40,28 @@ class Migration(migrations.Migration):
                 ('latitude', models.FloatField()),
                 ('longitude', models.FloatField()),
                 ('thumbnail', models.ImageField(blank=True, null=True, upload_to='images/')),
-                ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='app.profile')),
+                ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='tour_theme.profile')),
             ],
         ),
         migrations.AddField(
             model_name='profile',
             name='bookmarks',
-            field=models.ManyToManyField(to='app.tourtheme'),
+            field=models.ManyToManyField(to='tour_theme.tourtheme'),
         ),
         migrations.AddField(
             model_name='profile',
             name='followers',
-            field=models.ManyToManyField(related_name='follow', to='app.profile'),
+            field=models.ManyToManyField(related_name='follow', to='tour_theme.profile'),
         ),
         migrations.AddField(
             model_name='profile',
             name='follows',
-            field=models.ManyToManyField(related_name='follower', to='app.profile'),
+            field=models.ManyToManyField(related_name='follower', to='tour_theme.profile'),
         ),
         migrations.AddField(
             model_name='profile',
             name='likes',
-            field=models.ManyToManyField(to='app.tour'),
+            field=models.ManyToManyField(to='tour_theme.tour'),
         ),
         migrations.AddField(
             model_name='profile',

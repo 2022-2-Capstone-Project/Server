@@ -1,13 +1,6 @@
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import Permission, User
 from rest_framework import viewsets, permissions
-
-from app import serializers, models
-
-
-class TourThemeViewSet(viewsets.ModelViewSet):
-    queryset = models.TourTheme.objects.all().order_by('-created')
-    serializer_class = serializers.TourThemeSerializer
-    permission_classes = [permissions.AllowAny]
+from . import models, serializers
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
