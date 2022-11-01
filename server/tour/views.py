@@ -1,10 +1,9 @@
-from django.shortcuts import render
-
-# Create your views here.
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import viewsets, permissions
+from . import models
+from .serializers import TourSerializer
 
 
-@api_view(['GET'])
-def getTourList(request):
-    return Response("hello")
+class TourViewSet(viewsets.ModelViewSet):
+    queryset = models.Tour.objects.all()
+    serializer_class = TourSerializer
+    # permission_classes = [permissions.AllowAny] // merge 후 사용
