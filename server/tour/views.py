@@ -4,6 +4,6 @@ from .serializers import TourSerializer
 
 
 class TourViewSet(viewsets.ModelViewSet):
-    queryset = models.Tour.objects.all()
+    queryset = models.Tour.objects.all().order_by('-created')
     serializer_class = TourSerializer
-    # permission_classes = [permissions.AllowAny] // merge 후 사용
+    permission_classes = [permissions.AllowAny]
