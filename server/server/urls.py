@@ -29,7 +29,7 @@ router.register(r'tour-themes', TourThemeViewSet)
 router.register(r'profiles', ProfileViewSet)
 router.register(r'user', UserViewSet)
 router.register(r'permission', PermissionViewSet)
-router.register(r'tourlist', TourViewSet)
+router.register(r'tours', TourViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
