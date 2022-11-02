@@ -13,15 +13,13 @@ class Tour(models.Model):
         Profile,
         on_delete=models.CASCADE,
         db_column="profile_id",
-        verbose_name="생성유저",
-        default=''
+        verbose_name="생성유저"
     )
     themeId = models.ForeignKey(
         TourTheme,
         on_delete=models.CASCADE,
         db_column="theme_id",
-        verbose_name="테마이름",
-        default=''
+        verbose_name="테마이름"
     )
 
     class Meta:
