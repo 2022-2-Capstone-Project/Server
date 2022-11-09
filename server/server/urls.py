@@ -23,6 +23,7 @@ from rest_framework import routers, permissions
 from user.views import *
 from tour_theme.views import *
 from tour.views import *
+from tour_application.views import *
 
 router = routers.DefaultRouter()
 router.register(r'tour-themes', TourThemeViewSet)
@@ -30,6 +31,7 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'user', UserViewSet)
 router.register(r'permission', PermissionViewSet)
 router.register(r'tours', TourViewSet)
+router.register(r'tour-applications', TourApplicationViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'user',
     'tour_theme',
-    'tour'
+    'tour',
+    'tour_application'
 ]
 
 MIDDLEWARE = [
