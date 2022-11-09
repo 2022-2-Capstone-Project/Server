@@ -3,14 +3,14 @@ from django.db import models
 
 class TourApplication(models.Model):
 
-    tour_id = models.OneToOneField(
+    tour = models.OneToOneField(
         "tour.Tour",
         related_name="tour_application",
         on_delete=models.CASCADE,
         verbose_name="투어"
     )
 
-    user_id = models.ManyToManyField(
+    user = models.ManyToManyField(
         "user.Profile",
         related_name="tour_application",
         verbose_name="투어참가유저"
