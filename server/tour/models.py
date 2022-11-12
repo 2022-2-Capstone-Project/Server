@@ -1,8 +1,9 @@
 from django.db import models
+
 from user.models import Profile
 from tour_theme.models import TourTheme
 
-# Create your models here.
+
 class Tour(models.Model):
     tourName = models.CharField(max_length=256, verbose_name="투어이름")
     date = models.CharField(max_length=50, verbose_name="투어일시")

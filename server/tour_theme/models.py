@@ -12,7 +12,4 @@ class TourTheme(models.Model):
     latitude = models.FloatField()  # 위도
     longitude = models.FloatField()  # 경도
     thumbnail = models.ImageField(upload_to='images/', blank=True, null=True)  # 썸네일
-
-
-class Tour(models.Model):
-    pass
+    checkpoints = models.TextField(null=True, blank=True)  # 체크포인트 ("위도,경도;위도,경도; ... ")

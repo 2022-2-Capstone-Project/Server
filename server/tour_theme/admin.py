@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import TourTheme, Tour
+from .models import TourTheme
 
 admin.site.register(TourTheme)
-admin.site.register(Tour)
