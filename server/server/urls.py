@@ -24,11 +24,16 @@ from user.views import *
 from tour_theme.views import *
 from tour.views import *
 from tour_application.views import *
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenVerifyView
 
 router = routers.DefaultRouter()
 router.register(r'tour-themes', TourThemeViewSet)
 router.register(r'profiles', ProfileViewSet)
 router.register(r'user', UserViewSet)
+router.register(r'sign-up', JWTSignUpView)
+# router.register(r'sign-in', JWTSignInView)
 router.register(r'permission', PermissionViewSet)
 router.register(r'tours', TourViewSet)
 router.register(r'tour-applications', TourApplicationViewSet)
@@ -50,9 +55,9 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('sign-up/', JWTSignUpView.as_view()),
-    # path('get/', get),
-    # path('post/', post),
+    path('token/', TokenObtainPairView.as_view()),
+    path('token/refresh/', TokenRefreshView.as_view()),
+    path('token/verify/', TokenVerifyView.as_view()),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

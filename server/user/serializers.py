@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User, Permission
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import Profile
 
 
@@ -23,7 +25,7 @@ class PermissionSerializer(serializers.HyperlinkedModelSerializer):
 
 class UserJWTSignUpSerializer(serializers.ModelSerializer):
 
-    email = serializers.CharField(
+    username = serializers.CharField(
         required=True,
         # write_only=True,
         max_length=20
@@ -35,30 +37,56 @@ class UserJWTSignUpSerializer(serializers.ModelSerializer):
         style={'input_type': 'password'}
     )
 
-    username = serializers.CharField(
-        required=True,
-        # write_only=True,
-        max_length=20
-    )
-
     class Meta:
         model = User
-        fields = ['email', 'password', 'username']
+        fields = ['username', 'password']
 
     def save(self, **kwargs):
         user = super().save()
 
-        user.email = self.validated_data['email']
-        user.set_password(self.validated_data['password'])
         user.username = self.validated_data['username']
+        user.set_password(self.validated_data['password'])
         user.save()
 
         return user
 
     def validate(self, data):
-        email = data.get('email', None)
+        username = data.get('username', None)
 
-        if User.objects.filter(email = email).exists():
-            raise serializers.ValidationError("User already exists")
+        if User.objects.filter(username = username).exists():
+            raise serializers.ValidationError("username already exists")
 
         return data
+
+
+# class UserJWTSignInSerializer(serializers.ModelSerializer):
+#
+#     username = serializers.CharField(
+#         required=True,
+#         # write_only=True,
+#         max_length=20
+#     )
+#
+#     password = serializers.CharField(
+#         required=True,
+#         # write_only=True,
+#         style={'input_type': 'password'}
+#     )
+#
+#     class Meta:
+#         model = User
+#         fields = ['username', 'password']
+#
+#     def validate(self, data):
+#         username = data.get('username', None)
+#         password = data.get('password', None)
+#
+#         if User.objects.filter(username=username).exists():
+#             user = User.objects.get(username=username)
+#
+#             if not user.check_password(password):
+#                 raise serializers.ValidationError("비밀번호가 틀렸습니다.")
+#         else:
+#             raise serializers.ValidationError("유저가 존재하지 않습니다.")
+#
+#         return data
