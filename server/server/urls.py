@@ -29,7 +29,6 @@ router = routers.DefaultRouter()
 router.register(r'tour-themes', TourThemeViewSet)
 router.register(r'profiles', ProfileViewSet)
 router.register(r'user', UserViewSet)
-router.register(r'sign', JWTSignUpView)
 router.register(r'permission', PermissionViewSet)
 router.register(r'tours', TourViewSet)
 router.register(r'tour-applications', TourApplicationViewSet)
@@ -51,6 +50,10 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('sign-up/', JWTSignUpView.as_view()),
+    # path('get/', get),
+    # path('post/', post),
+
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
