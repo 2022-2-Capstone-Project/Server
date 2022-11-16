@@ -29,8 +29,8 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.views import TokenVerifyView
 
 router = routers.DefaultRouter()
-router.register(r'tour-themes', TourThemeViewSet)
 router.register(r'profiles', ProfileViewSet)
+router.register(r'tour-themes', TourThemeViewSet)
 router.register(r'user', UserViewSet)
 router.register(r'sign-up', JWTSignUpView)
 # router.register(r'sign-in', JWTSignInView)
@@ -60,6 +60,7 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
     path('token/verify/', TokenVerifyView.as_view()),
+    # path('tour-themes/',  include('tour_theme.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

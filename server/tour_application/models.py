@@ -16,6 +16,10 @@ class TourApplication(models.Model):
         verbose_name="투어참가유저"
     )
 
+    participants_on_site = models.IntegerField(default=0, blank=True)
+
+    tour_finished = models.BooleanField(default=False, blank=True)
+
     created = models.DateTimeField(auto_now_add=True, verbose_name="참가신청일시")
 
     class Meta:
