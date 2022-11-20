@@ -13,6 +13,7 @@ import datetime
 import os.path
 from datetime import timedelta
 from pathlib import Path
+# from user.models import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,7 +78,8 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
-    'TOKEN_USER_CLASS': 'User',
+    # 'TOKEN_USER_CLASS': 'User',
+    'TOKEN_USER_CLASS': 'user.Profile',
 
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
@@ -145,6 +147,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'user.Profile'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

@@ -1,14 +1,14 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class Profile(models.Model):
+class Profile(AbstractUser, models.Model):
     class UserType(models.TextChoices):
         JUNIOR = 'JR', _('Junior')
         SENIOR = 'SR', _('Senior')
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  # 기본 유저 모델
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)  # 기본 유저 모델
     nickname = models.CharField(max_length=30)  # 닉네임
     bookmarks = models.ManyToManyField('tour_theme.TourTheme', blank=True)  # 북마크한 테마 (선배용)
     likes = models.ManyToManyField('tour.Tour', blank=True)  # 좋아요한 투어 (후배용)
