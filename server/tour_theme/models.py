@@ -14,3 +14,4 @@ class TourTheme(models.Model):
     longitude = models.FloatField()  # 경도
     thumbnail = models.ImageField(upload_to='images/', blank=True, null=True)  # 썸네일
     checkpoints = models.TextField(null=True, blank=True)  # 체크포인트 ("위도,경도;위도,경도; ... ")
+    description = models.TextField() # 테마 설명
