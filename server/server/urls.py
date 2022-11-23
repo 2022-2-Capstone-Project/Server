@@ -55,7 +55,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('my-tour-themes/', MyTourThemeList.as_view()),
     path('my-tours/', MyTourList.as_view()),
-    path('token/', TokenObtainPairView.as_view()),
+    path('token/', JwtTokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
     path('token/verify/', TokenVerifyView.as_view()),
     # path('tour-themes/',  include('tour_theme.urls')),

@@ -4,11 +4,13 @@ from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from . import models, serializers
 # from .serializers import UserJWTSignUpSerializer
 from .forms import SignUpForm
 from .serializers import ProfileJWTSignUpSerializer
+from .serializers import TokenObtainPairSerializer
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = models.Profile.objects.all()
@@ -76,6 +78,10 @@ class JWTProfileSignUpView(viewsets.ModelViewSet):
             }, status=200)
 
         return Response(status=400)
+
+
+class JwtTokenObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer
 
 # class JWTSignInView(viewsets.ModelViewSet):
 #     queryset = User.objects.all()

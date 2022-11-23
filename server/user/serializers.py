@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Permission
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Profile
@@ -65,3 +66,16 @@ class ProfileJWTSignUpSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("username already exists")
 
         return data
+
+# TokenObtainPairSerializer를 상속하여 클레임 설정
+class TokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, profile):
+	    # 생성된 토큰 가져오기
+        token = super().get_token(profile)
+
+        # 사용자 지정 클레임 설정하기.
+        token['username'] = profile.username
+        token['user_type'] = profile.user_type
+
+        return token
