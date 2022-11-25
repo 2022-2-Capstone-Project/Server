@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Permission, User
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -82,6 +83,23 @@ class JWTProfileSignUpView(viewsets.ModelViewSet):
 
 class JwtTokenObtainPairView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
+
+
+class ProfileDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, username):
+        try:
+            profile = models.Profile.objects.get(username=username)
+            return profile
+        except ObjectDoesNotExist:
+            return None
+
+    def get(self, request, username, format=None):
+        post = self.get_object(username)
+        serializer = serializers.ProfileSerializer(post)
+        return Response(serializer.data)
+
 
 # class JWTSignInView(viewsets.ModelViewSet):
 #     queryset = User.objects.all()

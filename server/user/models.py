@@ -20,3 +20,4 @@ class Profile(AbstractUser, models.Model):
         default=UserType.JUNIOR
     )  # 유저 타입 (선배, 후배)
     reputation = models.PositiveIntegerField(default=0)  # 평판 점수
+    point = models.PositiveIntegerField(default=0) # 포인트
