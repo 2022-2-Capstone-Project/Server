@@ -15,4 +15,3 @@ class TourTheme(models.Model):
     thumbnail = models.ImageField(upload_to='images/', blank=True, null=True)  # 썸네일
     checkpoints = models.TextField(null=True, blank=True)  # 체크포인트 ("위도,경도;위도,경도; ... ")
     description = models.TextField() # 테마 설명
-    category = models.CharField(max_length=500)
