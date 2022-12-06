@@ -38,7 +38,11 @@ class MyTourThemeList(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return TourTheme.objects.filter(author=Profile.objects.get(user=user))
+        print(f"user {user}")
+        my_profile = Profile.objects.filter(username=user)
+        print(my_profile)
+
+        return TourTheme.objects.filter(author__in=my_profile)
 
 
 class SearchTourTheme(generics.ListAPIView):

@@ -98,7 +98,7 @@ SIMPLE_JWT = {
     'JWK_URL': None,
     'LEEWAY': 0,
 
-    # 'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_TYPES': ('TOKEN',),
     # 'AUTH_HEADER_NAME': 'Authorization',
     'USER_ID_FIELD': 'username',
     'USER_ID_CLAIM': 'username',
