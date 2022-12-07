@@ -10,6 +10,8 @@ from .models import TourApplication
 from .serializers import TourApplicationSerializer
 from user.models import Profile
 
+from user.serializers import ProfileSerializer
+
 
 class TourApplicationViewSet(viewsets.ModelViewSet):
     queryset = models.TourApplication.objects.all().order_by('-created')
@@ -48,26 +50,22 @@ class EarnPoint(APIView):
     def patch(self, request, tour_id):
 
         tour = Tour.objects.get(pk=tour_id)
-        print(f"tour = {tour}")
         tour_application = TourApplication.objects.get(tour=tour)
-        print(f"tour_application = {tour_application}")
+        users = Profile.objects.filter(tour_application=tour_application)
+        user_list = list(users)
 
-        print(f"tour_application.user = {tour_application.user}")
-        for user in tour_application.user:
-            profile = Profile.objects.get(pk=user)
-            profile.point += 100
+        for user in user_list:
+            user.point += 100
 
-            serializer = serializers.ProfileSerializer(profile, data=request.data, partial=True)
+            serializer = ProfileSerializer(user, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
 
-        tour = Tour.objects.filter(tour_application__in=tour_application)
-        print(f"투어 신청서로 찾은 투어 = {tour}")
+        sr = list(Profile.objects.filter(username=tour.profile_id))[0]
 
-        sr = Profile.objects.filter(id__in=tour.profile_id)
-        print(f"투어로 찾은 선배 = {sr}")
         sr.point += 100
-        serializer = serializers.ProfileSerializer(sr, data=request.data, partial=True)
+
+        serializer = ProfileSerializer(sr, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
 
