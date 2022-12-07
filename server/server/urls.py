@@ -24,6 +24,7 @@ from user.views import *
 from tour_theme.views import *
 from tour.views import *
 from tour_application.views import *
+from point_shop.views import *
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.views import TokenVerifyView
@@ -35,6 +36,7 @@ router.register(r'sign-up', JWTProfileSignUpView)
 router.register(r'permission', PermissionViewSet)
 router.register(r'tours', TourViewSet)
 router.register(r'tour-applications', TourApplicationViewSet)
+router.register(r'point-shop', PointShopViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(

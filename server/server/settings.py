@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'user',
     'tour_theme',
     'tour',
-    'tour_application'
+    'tour_application',
+    'point_shop'
 ]
 
 REST_FRAMEWORK = {
