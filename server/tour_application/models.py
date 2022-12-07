@@ -13,7 +13,8 @@ class TourApplication(models.Model):
     user = models.ManyToManyField(
         "user.Profile",
         related_name="tour_application",
-        verbose_name="투어참가유저"
+        verbose_name="투어참가유저",
+        blank=True
     )
 
     participants_on_site = models.IntegerField(default=0, blank=True)

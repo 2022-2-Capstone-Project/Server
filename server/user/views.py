@@ -10,9 +10,13 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from . import models, serializers
 # from .serializers import UserJWTSignUpSerializer
 from .forms import SignUpForm
+from .models import Profile
 from .serializers import ProfileJWTSignUpSerializer
 from .serializers import TokenObtainPairSerializer
 from .serializers import ProfileSerializer
+from tour.models import Tour
+from tour_application.models import TourApplication
+
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = models.Profile.objects.all()
@@ -100,3 +104,4 @@ class ProfileDetailView(APIView):
         post = self.get_object(username)
         serializer = serializers.ProfileSerializer(post)
         return Response(serializer.data)
+
