@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.models import Permission, User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -105,3 +107,23 @@ class ProfileDetailView(APIView):
         serializer = serializers.ProfileSerializer(post)
         return Response(serializer.data)
 
+
+class WatchPremiumTheme(APIView):
+    serializer_class = serializers.ProfileSerializer
+
+    def patch(self, request):
+        user = self.request.user
+
+        user = Profile.objects.get(username=user)
+
+        if user.point < 100:
+            return Response("not enough point")
+
+        user.point -= 100
+
+        serializer = ProfileSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(data=serializer.data)
+
+        return Response("fail")
