@@ -55,7 +55,7 @@ class EarnPoint(APIView):
         user_list = list(users)
 
         for user in user_list:
-            user.point += 100
+            user.point += 200
 
             serializer = ProfileSerializer(user, data=request.data, partial=True)
             if serializer.is_valid():
@@ -63,7 +63,8 @@ class EarnPoint(APIView):
 
         sr = list(Profile.objects.filter(username=tour.profile_id))[0]
 
-        sr.point += 100
+        sr.point += 200
+        sr.reputation += 200
 
         serializer = ProfileSerializer(sr, data=request.data, partial=True)
         if serializer.is_valid():
