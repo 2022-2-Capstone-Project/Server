@@ -19,19 +19,13 @@ from .serializers import ProfileSerializer
 from tour.models import Tour
 from tour_application.models import TourApplication
 
+from point_shop.models import PointShop
+
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = models.Profile.objects.all()
     serializer_class = serializers.ProfileSerializer
     permission_classes = [permissions.AllowAny]
-    # permission_classes = [permissions.IsAuthenticated]
-
-
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = serializers.UserSerializer
-#     permission_classes = [permissions.AllowAny]
-#     # permission_classes = [permissions.IsAuthenticated]
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
@@ -41,28 +35,6 @@ class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = serializers.PermissionSerializer
 
-
-# class JWTSignUpView(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserJWTSignUpSerializer
-#
-#     def create(self, request):
-#         serializer = UserJWTSignUpSerializer(data=request.data)
-#
-#         if serializer.is_valid(raise_exception=True):
-#             user = serializer.save()
-#
-#             # token = RefreshToken.for_user(user)
-#             # refresh = str(token)
-#             # access = str(token.access_token)
-#
-#             return JsonResponse({
-#                 'user': serializer.data,
-#                 # 'access': access,
-#                 # 'refresh': refresh,
-#             }, status=200)
-#
-#         return Response(status=400)
 
 class JWTProfileSignUpView(viewsets.ModelViewSet):
     form_class = SignUpForm
@@ -120,6 +92,30 @@ class WatchPremiumTheme(APIView):
             return Response("not enough point")
 
         user.point -= 100
+
+        serializer = ProfileSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(data=serializer.data)
+
+        return Response("fail")
+
+
+class BuyProduct(APIView):
+    serializer_class = serializers.ProfileSerializer
+
+    def patch(self, request, product_id):
+        user = self.request.user
+
+        user = Profile.objects.get(username=user)
+
+        product = PointShop.objects.get(id=product_id)
+        print(f"price = {product.price}")
+
+        if user.point < product.price:
+            return Response("not enough point")
+
+        user.point -= product.price
 
         serializer = ProfileSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
