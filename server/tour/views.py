@@ -19,7 +19,11 @@ class MyTourList(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Tour.objects.filter(profile=Profile.objects.get(user=user))
+        print(f"MyTourList user = {user}")
+        my_profile = Profile.objects.filter(username=user)
+        print(f"MyTourList profile = {my_profile}")
+
+        return Tour.objects.filter(profile_id__in=my_profile)
 
 
 class SearchTour(generics.ListAPIView):
