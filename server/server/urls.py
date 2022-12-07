@@ -61,6 +61,8 @@ urlpatterns = [
     path('user_info/<str:username>/', ProfileDetailView.as_view()),
     path('tour-theme/search', SearchTourTheme.as_view()),
     path('tour/search', SearchTour.as_view()),
+    path('tour/start/<int:pk>', StartTour.as_view()),
+    path('tour/end/<int:pk>', EndTour.as_view()),
     # path('tour-themes/',  include('tour_theme.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

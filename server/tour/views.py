@@ -1,7 +1,9 @@
+from django.http import JsonResponse
 from rest_framework import viewsets, permissions, generics
 
 from django.contrib import messages
 from django.db.models import Q
+from rest_framework.views import APIView
 from user.models import Profile
 from . import models
 from .models import Tour
@@ -40,3 +42,34 @@ class SearchTour(generics.ListAPIView):
         return Tour.objects.filter(
             Q(tourName__icontains=keyword) |
             Q(description__icontains=keyword))
+
+
+class StartTour(APIView):
+    serializer_class = TourSerializer
+
+    def patch(self, request, pk):
+        tour = Tour.objects.get(pk=pk)
+        tour.status = 2
+
+        serializer = TourSerializer(tour, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(data=serializer.data)
+
+        return JsonResponse(data="wrong parameters")
+
+
+class EndTour(APIView):
+    serializer_class = TourSerializer
+
+    def patch(self, request, pk):
+        tour = Tour.objects.get(pk=pk)
+        tour.status = 3
+
+        serializer = TourSerializer(tour, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+
+            return JsonResponse(data=serializer.data)
+
+        return JsonResponse(data="wrong parameters")

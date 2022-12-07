@@ -14,6 +14,7 @@ class Tour(models.Model):
     start_place = models.CharField(max_length=100, verbose_name="시작장소")  # 시작 장소
     latitude = models.FloatField(verbose_name="시작장소 위도")  # 위도
     longitude = models.FloatField(verbose_name="시작장소 경도")  # 경도
+    status = models.IntegerField(verbose_name="투어 상태", default=1)  # 투어 상태, 1 = 시작 전 / 2 = 진행 중 / 3 = 완료
     profile_id = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
