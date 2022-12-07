@@ -1,11 +1,12 @@
 from django.http import JsonResponse
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics
 from rest_framework.views import APIView
 from tour_application import serializers, models
 
 from tour.models import Tour
 from .models import TourApplication
 from .serializers import TourApplicationSerializer
+from user.models import Profile
 
 
 class TourApplicationViewSet(viewsets.ModelViewSet):
@@ -22,7 +23,6 @@ class AddParticipant(APIView):
         print(f"tour = {tour}")
         tour_application = TourApplication.objects.get(tour=tour)
 
-        # tour_application = self.get_object(pk)
         user_id = self.request.user.id
 
         tour_application.user.add(user_id)
@@ -37,17 +37,17 @@ class AddParticipant(APIView):
         return JsonResponse(data="wrong parameters")
 
 
-class EarnPoint(APIView):
-    serializer_class = serializers.TourApplicationSerializer
-
-    def patch(self, request, pk):
-        user = Tour.objects.get(pk=pk)
-        tour.status = 3
-
-        serializer = TourSerializer(tour, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-
-            return JsonResponse(data=serializer.data)
-
-        return JsonResponse(data="wrong parameters")
+# class EarnPoint(APIView):
+#     serializer_class = serializers.TourApplicationSerializer
+#
+#     def patch(self, request, pk):
+#         user = Tour.objects.get(pk=pk)
+#         tour.status = 3
+#
+#         serializer = TourSerializer(tour, data=request.data, partial=True)
+#         if serializer.is_valid():
+#             serializer.save()
+#
+#             return JsonResponse(data=serializer.data)
+#
+#         return JsonResponse(data="wrong parameters")

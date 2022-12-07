@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from rest_framework import viewsets, permissions, generics
 
@@ -8,6 +10,7 @@ from user.models import Profile
 from . import models
 from .models import Tour
 from .serializers import TourSerializer
+from tour_application.models import TourApplication
 
 
 class TourViewSet(viewsets.ModelViewSet):
@@ -26,6 +29,19 @@ class MyTourList(generics.ListAPIView):
         print(f"MyTourList profile = {my_profile}")
 
         return Tour.objects.filter(profile_id__in=my_profile)
+
+
+class ApplicationTourList(generics.ListAPIView):
+    serializer_class = TourSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        print(f"ApplicationTourList user = {user}")
+        my_profile = Profile.objects.filter(username=user)
+        tour_application = TourApplication.objects.filter(user__in=my_profile)
+        print(f"ApplicationTourList tour_application = {tour_application}")
+
+        return Tour.objects.filter(tour_application__in=tour_application)
 
 
 class SearchTour(generics.ListAPIView):
